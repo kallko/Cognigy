@@ -26,7 +26,7 @@ router
   .get(async function (req: express.Request, res: express.Response) {
     const cars = await carService.getAll();
     res.json({
-      cars
+      cars,
     });
   });
 
@@ -46,7 +46,7 @@ router
       const result = await carController.createCar(req.body);
       res.status(201);
       res.json({
-        result
+        result,
       });
     } catch (err: any) {
       res.status(415).send(err.message);
@@ -55,41 +55,47 @@ router
 
 router
   .route("/car/:id")
-  .put(function (req: express.Request, res: express.Response) {
-    res.json({
-      cars: [
-        {
-          name: "3 Series Put",
-          brand: "BMW",
-        },
-      ],
-    });
+  .put(async function (req: express.Request, res: express.Response) {
+    try {
+      const car = await carController.replaceCar(
+        req.body,
+        Number(req.params.id)
+      );
+      res.json({
+        car,
+      });
+    } catch (err: any) {
+      res.status(404).send(err.message);
+    }
   });
 
 router
   .route("/car/:id")
-  .patch(function (req: express.Request, res: express.Response) {
-    res.json({
-      cars: [
-        {
-          name: "5 Series Delete",
-          brand: "BMW",
-        },
-      ],
-    });
+  .patch(async function (req: express.Request, res: express.Response) {
+    try {
+      const car = await carController.updateCar(
+        req.body,
+        Number(req.params.id)
+      );
+      res.json({
+        car,
+      });
+    } catch (err: any) {
+      res.status(404).send(err.message);
+    }
   });
 
 router
   .route("/car/:id")
-  .delete(function (req: express.Request, res: express.Response) {
-    res.json({
-      cars: [
-        {
-          name: "5 Series Delete",
-          brand: "BMW",
-        },
-      ],
-    });
+  .delete(async function (req: express.Request, res: express.Response) {
+    try {
+      const car = await carService.delete(Number(req.params.id));
+      res.json({
+        car,
+      });
+    } catch (err: any) {
+      res.status(404).send(err.message);
+    }
   });
 
 router.route("/").post(function (req: express.Request, res: express.Response) {

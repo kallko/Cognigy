@@ -1,4 +1,5 @@
 import { Car } from "../@type/Car";
+import { carWithIdNotExist } from "../Error/carApiError";
 import { CarSchema } from "./Schema/Car";
 
 const mongoose = require("mongoose");
@@ -12,9 +13,24 @@ const protection = {
   producedAt: 1,
 };
 
+// todo checkId in middlewear
 module.exports = {
   create: function (car: Car): Promise<Car> {
     return new CarModel(car).save();
+  },
+  replace: async function (newCar: Car, id: number) {
+    const car = CarModel.findOne({ id });
+    if (!car) {
+      throw carWithIdNotExist;
+    }
+    return car.update(newCar);
+  },
+  delete: async function (id: number) {
+    const car = CarModel.findOne({ id });
+    if (!car) {
+      throw carWithIdNotExist;
+    }
+    return car.deleteOne();
   },
   getById: function (carId: string): Promise<Car> {
     return CarModel.findOne(

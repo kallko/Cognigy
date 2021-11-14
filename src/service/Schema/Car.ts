@@ -37,3 +37,17 @@ export const validateCar = ajv.compile({
   },
   required: ["id", "brand", "name", "engineHPPower", "producedAt"],
 });
+
+export const validateCarPartial = ajv.compile({
+  type: "object",
+  properties: {
+    id: { type: "number" },
+    brand: { type: "string" },
+    name: { type: "string" },
+    engineHPPower: { type: "number" },
+    producedAt: {
+      type: "string",
+      format: "date-time",
+    },
+  },
+});

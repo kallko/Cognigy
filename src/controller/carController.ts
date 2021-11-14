@@ -1,16 +1,28 @@
 import { Car } from "../@type/Car";
-import { validateCar } from "../service/Schema/Car";
+import { validateCar, validateCarPartial } from "../service/Schema/Car";
+import { wrongCarSchema } from "../Error/carApiError";
 const carService = require("../service/carSrvice");
 
 export const carController = {
-  testFunction(input: number): any {
-    return input * 2;
-  },
-  async createCar(car: Car): Promise<{ id: number }> {
+  async createCar(car: Car): Promise<Car> {
     if (validateCar(car)) {
       return carService.create(car);
     } else {
-      throw new Error("Car schema not valid");
+      throw wrongCarSchema;
+    }
+  },
+  async replaceCar(car: Car, id: number): Promise<Car> {
+    if (validateCar(car)) {
+      return carService.replace(car, id);
+    } else {
+      throw wrongCarSchema;
+    }
+  },
+  async updateCar(car: Car, id: number): Promise<Car> {
+    if (validateCarPartial(car)) {
+      return carService.replace(car, id);
+    } else {
+      throw wrongCarSchema;
     }
   },
 };
