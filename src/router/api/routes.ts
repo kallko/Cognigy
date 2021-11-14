@@ -1,8 +1,8 @@
 import * as express from "express";
 import { carController } from "../../controller/carController";
+import { carService } from "../../service/carSrvice";
 const router = express.Router();
 const serverStartTime = new Date();
-const carService = require("../../service/carSrvice");
 
 router.route("/").get(function (req: express.Request, res: express.Response) {
   try {
@@ -15,7 +15,27 @@ router
   .route("/help")
   .get(function (req: express.Request, res: express.Response) {
     try {
-      res.json({ response: "test route success v1", time: serverStartTime });
+      res.json({
+        status: "test route success v1",
+        time: serverStartTime,
+        possibleRoutes: [
+          "GET: /",
+          "GET: /api/v1/help",
+          "GET: /api/v1/cars",
+          "GET: /api/v1/car/id",
+          "POST: /api/v1/car/id",
+          "PATCH: /api/v1/car/id",
+          "PUT: /api/v1/car/id",
+          "DELETE: /api/v1/car/id",
+        ],
+        carSchema: {
+          id: "number",
+          brand: "string",
+          name: "string",
+          engineHPPower: "number",
+          producedAt: "ISO Date string",
+        },
+      });
     } catch (e: any) {
       console.error("ERROR " + e + e.stack);
     }
@@ -97,17 +117,5 @@ router
       res.status(404).send(err.message);
     }
   });
-
-router.route("/").post(function (req: express.Request, res: express.Response) {
-  try {
-    res.json({
-      response: "main route success",
-      time: serverStartTime,
-      method: "Post",
-    });
-  } catch (e: any) {
-    console.error("ERROR " + e + e.stack);
-  }
-});
 
 module.exports = router;

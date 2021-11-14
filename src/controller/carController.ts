@@ -1,7 +1,7 @@
 import { Car } from "../@type/Car";
 import { validateCar, validateCarPartial } from "../service/Schema/Car";
 import { wrongCarSchema } from "../Error/carApiError";
-const carService = require("../service/carSrvice");
+import { carService } from "../service/carSrvice";
 
 export const carController = {
   async createCar(car: Car): Promise<Car> {
@@ -20,7 +20,7 @@ export const carController = {
   },
   async updateCar(car: Car, id: number): Promise<Car> {
     if (validateCarPartial(car)) {
-      return carService.replace(car, id);
+      return carService.update(car, id);
     } else {
       throw wrongCarSchema;
     }

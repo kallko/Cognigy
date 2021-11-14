@@ -14,7 +14,7 @@ const protection = {
 };
 
 // todo checkId in middlewear
-module.exports = {
+export const carService = {
   create: function (car: Car): Promise<Car> {
     return new CarModel(car).save();
   },
@@ -23,7 +23,14 @@ module.exports = {
     if (!car) {
       throw carWithIdNotExist;
     }
-    return car.update(newCar);
+    return car.replaceOne(newCar);
+  },
+  update: async function (newCar: Car, id: number) {
+    const car = CarModel.findOne({ id });
+    if (!car) {
+      throw carWithIdNotExist;
+    }
+    return car.updateOne(newCar);
   },
   delete: async function (id: number) {
     const car = CarModel.findOne({ id });
@@ -32,10 +39,10 @@ module.exports = {
     }
     return car.deleteOne();
   },
-  getById: function (carId: string): Promise<Car> {
+  getById: function (id: string): Promise<Car> {
     return CarModel.findOne(
       {
-        id: carId,
+        id,
       },
       protection
     );
