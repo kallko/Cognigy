@@ -1,6 +1,8 @@
 import * as express from "express";
+import { carController } from "../../controller/carController";
 const router = express.Router();
 const serverStartTime = new Date();
+const carService = require("../../service/carSrvice");
 
 router.route("/").get(function (req: express.Request, res: express.Response) {
   try {
@@ -21,41 +23,34 @@ router
 
 router
   .route("/cars")
-  .get(function (req: express.Request, res: express.Response) {
+  .get(async function (req: express.Request, res: express.Response) {
+    const cars = await carService.getAll();
     res.json({
-      cars: [
-        {
-          name: "3 Series",
-          brand: "BMW",
-        },
-      ],
+      cars
     });
   });
 
 router
   .route("/car/:id")
-  .get(function (req: express.Request, res: express.Response) {
+  .get(async function (req: express.Request, res: express.Response) {
+    const car = await carService.getById(req.params.id);
     res.json({
-      cars: [
-        {
-          name: "1 Series Get",
-          brand: "BMW",
-        },
-      ],
+      car,
     });
   });
 
 router
-  .route("/car/:id")
-  .post(function (req: express.Request, res: express.Response) {
-    res.json({
-      cars: [
-        {
-          name: "3 Series Put",
-          brand: "BMW",
-        },
-      ],
-    });
+  .route("/car")
+  .post(async function (req: express.Request, res: express.Response) {
+    try {
+      const result = await carController.createCar(req.body);
+      res.status(201);
+      res.json({
+        result
+      });
+    } catch (err: any) {
+      res.status(415).send(err.message);
+    }
   });
 
 router
