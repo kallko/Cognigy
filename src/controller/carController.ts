@@ -1,6 +1,6 @@
 import { Car } from "../@type/Car";
 import { validateCar, validateCarPartial } from "../service/Schema/Car";
-import { wrongCarSchema } from "../Error/carApiError";
+import { wrongCarSchema } from "../error/carApiError";
 import { carService } from "../service/carSrvice";
 
 export const carController = {

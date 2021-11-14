@@ -40,6 +40,11 @@ router
       console.error("ERROR " + e + e.stack);
     }
   });
+router
+  .route("/login")
+  .get(function (req: express.Request, res: express.Response) {
+    res.json({ "x-api-key": "123" });
+  });
 
 router
   .route("/cars")

@@ -1,5 +1,5 @@
 import { Car } from "../@type/Car";
-import { carWithIdNotExist } from "../Error/carApiError";
+import { carWithIdNotExist } from "../error/carApiError";
 import { CarSchema } from "./Schema/Car";
 
 const mongoose = require("mongoose");
