@@ -42,7 +42,7 @@ router
   });
 router
   .route("/login")
-  .get(function (req: express.Request, res: express.Response) {
+  .post(function (req: express.Request, res: express.Response) {
     res.json({ "x-api-key": "123" });
   });
 
