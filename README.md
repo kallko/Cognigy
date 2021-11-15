@@ -6,6 +6,7 @@ and Docker
 (https://docs.docker.com/engine/install/)
 
 Create some test folder and move in:
+
 `git clone https://github.com/kallko/Cognity.git`
 
 `cd Cognity`
@@ -24,7 +25,7 @@ Then You could Use Postman or try in terminal:
 
 `curl -X POST localhost:5000/api/v1/login`
 
-login route will give You x-api-key, which You should add to headers like this:
+login route will give You x-api-key, which You should add to headers for any other request like this:
 
 `curl -X GET localhost:5000/api/v1/cars -H x-api-key:123`
 
@@ -50,3 +51,12 @@ where id is integer
 
 Routes help & login don't need x-api-key
 
+Car Schema:
+
+`{
+id: "number",
+brand: "string",
+name: "string",
+engineHPPower: "number",
+producedAt: "ISO Date string",
+}`
