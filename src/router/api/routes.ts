@@ -19,8 +19,8 @@ router
         status: "test route success v1",
         time: serverStartTime,
         possibleRoutes: [
-          "GET: /",
           "GET: /api/v1/help",
+          "POST: /api/v1/login",
           "GET: /api/v1/cars",
           "GET: /api/v1/car/id",
           "POST: /api/v1/car/id",
