@@ -7,9 +7,9 @@ and Docker
 
 Create some test folder and move in:
 
-`git clone https://github.com/kallko/Cognity.git`
+`git clone https://github.com/kallko/Cognigy.git`
 
-`cd Cognity`
+`cd Cognigy`
 
 `docker-compose -p master up`
 

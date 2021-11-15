@@ -1,5 +1,5 @@
 services:
-  cognity_server:
+  cognigy_server:
     build:
       context: .
     volumes:
