@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 import Ajv from "ajv";
+import { Car } from "../../@type/Car";
 const ajv = new Ajv();
 
 const dateTimeRegex =
@@ -23,31 +24,26 @@ export const CarSchema = new Schema(
   { strict: true }
 );
 
-export const validateCar = ajv.compile({
-  type: "object",
-  properties: {
-    id: { type: "number" },
-    brand: { type: "string" },
-    name: { type: "string" },
-    engineHPPower: { type: "number" },
-    producedAt: {
-      type: "string",
-      format: "date-time",
+export const validateCar = (car: Car, strict: boolean) => {
+  const required = strict
+    ? ["id", "brand", "name", "engineHPPower", "producedAt"]
+    : [];
+  return ajv.validate(
+    {
+      type: "object",
+      properties: {
+        id: { type: "number" },
+        brand: { type: "string" },
+        name: { type: "string" },
+        engineHPPower: { type: "number" },
+        producedAt: {
+          type: "string",
+          format: "date-time",
+        },
+      },
+      additionalProperties: false,
+      required,
     },
-  },
-  required: ["id", "brand", "name", "engineHPPower", "producedAt"],
-});
-
-export const validateCarPartial = ajv.compile({
-  type: "object",
-  properties: {
-    id: { type: "number" },
-    brand: { type: "string" },
-    name: { type: "string" },
-    engineHPPower: { type: "number" },
-    producedAt: {
-      type: "string",
-      format: "date-time",
-    },
-  },
-});
+    car
+  );
+};
