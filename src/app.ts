@@ -6,7 +6,7 @@ const apiRouter = require("./router/api/routes");
 
 const app = express();
 
-const PORT: number = 5000;
+const PORT: number = 5001;
 app.use(authMiddleware);
 app.use(checkIdMiddleware);
 
